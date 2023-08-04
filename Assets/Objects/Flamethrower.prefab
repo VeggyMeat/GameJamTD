@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c8ba56e146092054a9cb7e2f433d5992, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerName: flamethrower
-  scanDelay: 0
+  scanDelay: 0.01
   projectileJson: Assets/Jsons/Flame.json
   json: Assets/Jsons/Flamethrower.json
   projectilePrefab: {fileID: 5313841959291113684, guid: c50205043c12bc24db5b516bc5d0dfc9, type: 3}

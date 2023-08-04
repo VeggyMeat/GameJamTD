@@ -1,0 +1,17 @@
+[
+  {
+    "damage": 3,
+    "velocity": 9,
+    "lifeSpan": 3
+  },
+  {
+    "damage": 4,
+    "velocity": 9,
+    "lifeSpan": 3
+  },
+  {
+    "damage": 5,
+    "velocity": 9,
+    "lifeSpan": 3
+  }
+]

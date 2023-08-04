@@ -6,13 +6,28 @@ public class Enemy : MonoBehaviour
 {
     private GameManager gameManager;
 
-    private float distanceTravelled;
-
     [SerializeField] private float maxHealth;
     private float health;
     [SerializeField] private float speed;
+
+    [SerializeField] private AudioClip deathSound;
+
+    public bool isDead = false;
+
+    /// <summary>
+    /// The speed of the enemy
+    /// </summary>
+    public float Speed
+    {
+        get
+        {
+            return speed;
+        }
+    }
+
     [SerializeField] private int moneyDrop;
     [SerializeField] private int damage;
+    private float startingPoint;
 
     /// <summary>
     /// The distance travelled down the path by the enemy
@@ -21,7 +36,7 @@ public class Enemy : MonoBehaviour
     {
         get
         {
-            return distanceTravelled;
+            return transform.position.x - startingPoint;
         }
     }
 
@@ -34,11 +49,20 @@ public class Enemy : MonoBehaviour
         // sets the gameManager
         this.gameManager = gameManager;
 
+        // scales the maxHP by the healthScale from the gameManager
+        maxHealth *= gameManager.healthScale;
+
         // sets HP to maxHP
-        maxHealth = health;
+        health = maxHealth;
+
+        // adds the enemy to the list from the gameManager to be tracked
+        gameManager.Enemies.Add(this);
 
         // sets the velocity of the enemy (walking to the right)
         GetComponent<Rigidbody2D>().velocity = -Vector2.left * speed;
+
+        // marks the starting point
+        startingPoint = transform.position.x;
     }
 
     /// <summary>
@@ -76,8 +100,17 @@ public class Enemy : MonoBehaviour
         // gives money to the player for killing the enemy
         gameManager.Money += moneyDrop;
 
+        // removes the enemy from the gameManager's list
+        gameManager.Enemies.Remove(this);
+
         // kills the gameObject
         Destroy(gameObject);
+
+        // sets the object as dead
+        isDead = true;
+
+        // plays the death sound
+        AudioSource.PlayClipAtPoint(deathSound, transform.position);
     }
 
     /// <summary>

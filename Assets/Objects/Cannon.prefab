@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: de084af07f7a9bb44b957caa4a9168a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerName: cannon
   scanDelay: 0.05
-  projectileJson: Assets/Json/Cannonball.json
-  json: Assets/Json/Cannon.json
+  projectileJson: Assets/Jsons/Cannonball.json
+  json: Assets/Jsons/Cannon.json
   projectilePrefab: {fileID: 5313841959291113684, guid: 674141d76538c744bb89f464c1e8dbab, type: 3}
+  cannonSound: {fileID: 8300000, guid: 9b5a113a2a8b9094da78f96cebf74af8, type: 3}

@@ -58,7 +58,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float enemySpawnRange;
     [SerializeField] private float enemySpawnX;
-    [SerializeField] private float enemySpawnDelay;
+    private Dictionary<string, float> enemySpawnDelay = new Dictionary<string, float>()
+    {
+        { "small", 0.25f },
+        { "medium", 0.5f },
+        { "large", 1f }
+    };
 
     [SerializeField] private GameObject smallEnemy;
     [SerializeField] private GameObject mediumEnemy;
@@ -75,6 +80,8 @@ public class GameManager : MonoBehaviour
     }
 
     private int wave = 0;
+
+    public int healthScale = 1;
 
     private List<Dictionary<string, int>> data;
 
@@ -122,6 +129,10 @@ public class GameManager : MonoBehaviour
         {
             return enemies;
         }
+        set
+        {
+            enemies = value;
+        }
     }
 
     private void Start()
@@ -151,8 +162,8 @@ public class GameManager : MonoBehaviour
     {
         // if the player presses the escape key, the menu is activated
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (settingsManager.gameObject.active)
+        {   
+            if (settingsManager.gameObject.activeSelf)
             {
                 settingsManager.Resume();
             }
@@ -184,7 +195,7 @@ public class GameManager : MonoBehaviour
         string enemyName = spawnEnemies.Dequeue();
 
         // spawns the enemy
-        GameObject enemy = Instantiate(enemyPrefabs[enemyName], new Vector3 (enemySpawnX, UnityEngine.Random.Range(-enemySpawnRange, enemySpawnRange), -2), Quaternion.identity);
+        GameObject enemy = Instantiate(enemyPrefabs[enemyName], new Vector3 (enemySpawnX, UnityEngine.Random.Range(-enemySpawnRange, enemySpawnRange), -2), Quaternion.Euler(0, 0, 180));
 
         // sets up the enemy
         enemy.GetComponent<Enemy>().Setup(this);
@@ -193,7 +204,7 @@ public class GameManager : MonoBehaviour
         if (spawnEnemies.Count > 0)
         {
             // spawn it after the delay
-            Invoke(nameof(SpawnEnemy), enemySpawnDelay);
+            Invoke(nameof(SpawnEnemy), enemySpawnDelay[enemyName]);
         }
         // otherwise
         else
@@ -223,6 +234,16 @@ public class GameManager : MonoBehaviour
 
     private void LoadWave()
     {
+        if (wave > 9)
+        {
+            return;
+        }
+        else if (wave == 9)
+        {
+            enemySpawnDelay["large"] = 0.05f;
+            healthScale = 999;
+        }
+
         // grabs the waveData from this wave
         Dictionary<string, int> waveData = data[wave];
 
@@ -249,6 +270,7 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        timeFrozen = true;
+        settingsManager.gameObject.SetActive(true);
+        settingsManager.Activate();
     }
 }

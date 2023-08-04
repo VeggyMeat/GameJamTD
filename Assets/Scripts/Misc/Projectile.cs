@@ -10,33 +10,26 @@ public class Projectile : MonoBehaviour
     protected float velocity;
     protected float damage;
 
-    protected float r;
-    protected float g;
-    protected float b;
-
     /// <summary>
     /// Sets up the new projectile
     /// </summary>
     /// <param name="variables">The data for the variables</param>
     /// <param name="angle">Angle in radians of the direction its facing</param>
-    public void Setup(Dictionary<string, string> variables, float angle)
+    public virtual void Setup(Dictionary<string, string> variables, float angle)
     {
         // sets the variables
         this.variables = variables;
 
         // loads in the variabkes
-        variables.Load(ref r, nameof(r));
-        variables.Load(ref g, nameof(g));
-        variables.Load(ref b, nameof(b));
         variables.Load(ref lifeSpan, nameof(lifeSpan));
         variables.Load(ref velocity, nameof(velocity));
         variables.Load(ref damage, nameof(damage));
 
-        // sets up the colour of the object
-        GetComponent<SpriteRenderer>().color = new Color(r, g, b);
-
         // sets up the movement of the projectile
         GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Cos(angle) * velocity, Mathf.Sin(angle) * velocity);
+
+        // kills the component after the lifespan
+        Invoke(nameof(Die), lifeSpan);
     }
 
     /// <summary>
@@ -52,7 +45,7 @@ public class Projectile : MonoBehaviour
     /// Called when the enemy collides with an object
     /// </summary>
     /// <param name="collision">The object collided with</param>
-    internal void OnTriggerEnter2D(Collider2D collision)
+    internal virtual void OnTriggerEnter2D(Collider2D collision)
     {
         // if the projectile colides with an enemy
         if (collision.gameObject.tag == "Enemy")

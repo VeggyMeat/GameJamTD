@@ -8,6 +8,8 @@ public class Tower : MonoBehaviour
 {
     [SerializeField] private string towerName;
 
+    private const float constantDumb = 0.45f;
+
     /// <summary>
     /// The name of the tower
     /// </summary>
@@ -64,7 +66,8 @@ public class Tower : MonoBehaviour
     {
         get
         {
-            return DateTime.Now.Subtract(lastAttackTime).Seconds;
+            TimeSpan span = DateTime.Now.Subtract(lastAttackTime);
+            return (float)span.Milliseconds / 1000 + span.Seconds;
         }
     }
 
@@ -88,6 +91,9 @@ public class Tower : MonoBehaviour
         this.towerSlot = towerSlot;
 
         this.gameManager = gameManager;
+
+        // loads in the json
+        LoadJson();
 
         // starts scanning for enemies to attack
         StartScanning();
@@ -185,12 +191,25 @@ public class Tower : MonoBehaviour
     {
         float angle;
 
+        try
+        {
+            // if the enemy is dead, dont aim
+            if (enemy.isDead)
+            {
+                return;
+            }
+        }
+        catch (Exception)
+        {
+            return;
+        }
+
         // JUST SOME TRIG, I SWEAR ITS NOT SCARY
 
         // arctan of the triangle between the tower and the enemy
-        float sine = Mathf.Atan2(Mathf.Abs(enemy.transform.position.y - transform.position.y), Mathf.Abs(enemy.transform.position.x - transform.position.x));
+        float sine = Mathf.Atan2(Mathf.Abs(enemy.transform.position.y - transform.position.y), Mathf.Abs(enemy.transform.position.x + constantDumb - transform.position.x));
 
-        if (enemy.transform.position.x > transform.position.x)
+        if (enemy.transform.position.x + constantDumb > transform.position.x)
         {
             // enemy to the right of tower (PI > angle)
             if (enemy.transform.position.y > transform.position.y)
@@ -220,7 +239,7 @@ public class Tower : MonoBehaviour
         }
 
         // sets the rotation to face the enemy
-        transform.rotation = Quaternion.Euler(0, 0, -angle * Mathf.Rad2Deg);
+        transform.rotation = Quaternion.Euler(0, 0, 180 + angle * Mathf.Rad2Deg);
     }
 
     /// <summary>
@@ -247,7 +266,7 @@ public class Tower : MonoBehaviour
     internal virtual void LevelUp()
     {
         // if the variables have been loaded, level up propperly
-        if (!jsonsLoaded)
+        if (jsonsLoaded)
         {
             level++;
         }

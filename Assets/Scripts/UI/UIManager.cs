@@ -105,7 +105,7 @@ public class UIManager : MonoBehaviour
             int cost = costs[slot.towerScript.TowerName][slot.towerScript.Level + 1];
 
             // if there is enough money level it up
-            if (gameManager.Money > cost)
+            if (gameManager.Money >= cost)
             {
                 // remove that amount of money
                 gameManager.Money -= cost;
@@ -154,7 +154,7 @@ public class UIManager : MonoBehaviour
                     if (gameManager.Money > costs["mortar"][0])
                     {
                         // remove that money
-                        gameManager.Money -= costs["cannon"][0];
+                        gameManager.Money -= costs["mortar"][0];
 
                         // add the flamethrower to the slot
                         slot.FillSlot(gameManager.Towers[SelectionState.Mortar]);

@@ -1,13 +1,13 @@
 [
   {
-    "minRange": 1,
+    "minRange": 0,
     "maxRange": 5,
     "attackDelay": 0.5
   },
   {
-
+    "attackDelay": 0.3
   },
   {
-
+    "attackDelay": 0.2
   }
 ]

@@ -1,0 +1,17 @@
+[
+  {
+    "lifeSpan": 2,
+    "velocity": 12,
+    "damage": 25
+  },
+  {
+    "lifeSpan": 2,
+    "velocity": 12,
+    "damage": 30
+  },
+  {
+    "lifeSpan": 2,
+    "velocity": 12,
+    "damage": 40
+  }
+]
