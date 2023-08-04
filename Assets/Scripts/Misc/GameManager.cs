@@ -238,11 +238,6 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        else if (wave == 9)
-        {
-            enemySpawnDelay["large"] = 0.05f;
-            healthScale = 999;
-        }
 
         // grabs the waveData from this wave
         Dictionary<string, int> waveData = data[wave];

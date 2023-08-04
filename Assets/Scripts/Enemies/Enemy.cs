@@ -49,9 +49,6 @@ public class Enemy : MonoBehaviour
         // sets the gameManager
         this.gameManager = gameManager;
 
-        // scales the maxHP by the healthScale from the gameManager
-        maxHealth *= gameManager.healthScale;
-
         // sets HP to maxHP
         health = maxHealth;
 
