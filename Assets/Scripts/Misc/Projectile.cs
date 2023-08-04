@@ -48,6 +48,10 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Called when the enemy collides with an object
+    /// </summary>
+    /// <param name="collision">The object collided with</param>
     internal void OnTriggerEnter2D(Collider2D collision)
     {
         // if the projectile colides with an enemy

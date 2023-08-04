@@ -1,0 +1,11 @@
+[
+  {
+    "timeDelay": 10,
+    "small": 5
+  },
+  {
+    "timeDelay": 10,
+    "medium": 3,
+    "small": 5
+  }
+]

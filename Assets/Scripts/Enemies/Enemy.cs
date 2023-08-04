@@ -8,8 +8,11 @@ public class Enemy : MonoBehaviour
 
     private float distanceTravelled;
 
-    private float maxHealth;
+    [SerializeField] private float maxHealth;
     private float health;
+    [SerializeField] private float speed;
+    [SerializeField] private int moneyDrop;
+    [SerializeField] private int damage;
 
     /// <summary>
     /// The distance travelled down the path by the enemy
@@ -30,6 +33,12 @@ public class Enemy : MonoBehaviour
     {
         // sets the gameManager
         this.gameManager = gameManager;
+
+        // sets HP to maxHP
+        maxHealth = health;
+
+        // sets the velocity of the enemy (walking to the right)
+        GetComponent<Rigidbody2D>().velocity = -Vector2.left * speed;
     }
 
     /// <summary>
@@ -64,8 +73,28 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Die()
     {
+        // gives money to the player for killing the enemy
+        gameManager.Money += moneyDrop;
 
         // kills the gameObject
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Called when the enemy collides with an object
+    /// </summary>
+    /// <param name="collision">The object collided with</param>
+    internal void OnTriggerEnter2D(Collider2D collision)
+    {
+        // if the projectile colides with the endZone
+        if (collision.gameObject.tag == "endZone")
+        {
+            // damages the player
+            gameManager.Health -= damage;
+
+            // kills the enemy
+            Die();
+        }
+        // otherwise ignore the collision
     }
 }

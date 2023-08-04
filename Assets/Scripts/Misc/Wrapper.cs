@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ public static class Wrapper
         stream.Close();
 
         // serialize and return the data
-        return JsonUtility.FromJson<List<Dictionary<string, string>>>(text);
+        return JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(text);
     }
 
 
